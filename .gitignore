@@ -1,0 +1,14 @@
+# Compiled class files
+*.class
+target/
+
+.mvn
+
+# Log files
+*.log
+
+# Maven files
+target/
+
+# VS Code files
+.vscode/
