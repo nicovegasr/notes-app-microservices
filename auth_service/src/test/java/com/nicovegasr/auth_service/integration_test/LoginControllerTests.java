@@ -1,4 +1,4 @@
-package com.nicovegasr.auth_service.e2e;
+package com.nicovegasr.auth_service.integration_test;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @SpringBootTest(classes = com.nicovegasr.auth_service.AuthServiceApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @AutoConfigureMockMvc
 class LoginControllerTests {
-    /* e2e tests should only test the happy path (e2e referred to test the entire controller logic)
+    /*
         1. Login user with credentials should return a JWT valid token with username and passwod information
         2. Login user with cypher oauth token should return a JWT valid token with username and passwod information cypher.
     */
