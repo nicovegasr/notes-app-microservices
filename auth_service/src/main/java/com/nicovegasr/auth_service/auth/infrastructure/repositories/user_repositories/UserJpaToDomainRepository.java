@@ -3,14 +3,14 @@ package com.nicovegasr.auth_service.auth.infrastructure.repositories.user_reposi
 import org.springframework.stereotype.Repository;
 
 import com.nicovegasr.auth_service.auth.domain.models.User;
-import com.nicovegasr.auth_service.auth.domain.repositories.UserDomainRepository;
+import com.nicovegasr.auth_service.auth.domain.repositories.UserRepository;
 import com.nicovegasr.auth_service.auth.infrastructure.mappers.UserMapper;
 
 import lombok.AllArgsConstructor;
 
 @Repository
 @AllArgsConstructor
-public class UserJpaToDomainRepository implements UserDomainRepository {
+public class UserJpaToDomainRepository implements UserRepository {
     private final UserJpaRepository userJpaRepository;
     
     public User findUserByUsername(String username) {
