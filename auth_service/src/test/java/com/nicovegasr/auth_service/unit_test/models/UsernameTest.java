@@ -16,7 +16,14 @@ class UsernameTest {
     @Test
     void testUsernameWithEmptyString() {
         assertThrows(IllegalArgumentException.class, () -> {
-            Username.build("");
+            Username.create("");
+        });
+    }
+
+    @Test
+    void testUsernameWithNullValue() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            Username.create(null);
         });
     }
 }

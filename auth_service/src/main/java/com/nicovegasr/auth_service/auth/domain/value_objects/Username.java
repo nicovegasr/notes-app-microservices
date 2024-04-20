@@ -8,7 +8,7 @@ import lombok.Getter;
 public class Username {
     String name;
 
-    public static Username build(String name) {
+    public static Username create(String name) {
         if (name.isEmpty()) {
             throw new IllegalArgumentException("Username cannot be empty");
         }
