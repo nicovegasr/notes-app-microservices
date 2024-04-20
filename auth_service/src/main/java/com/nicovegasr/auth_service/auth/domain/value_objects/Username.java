@@ -9,18 +9,24 @@ public class Username {
     String name;
 
     public static Username create(String name) {
-        if (name == null) {
-            throw new IllegalArgumentException("Username cannot be null");
-        }
-        if (name.isEmpty()) {
-            throw new IllegalArgumentException("Username cannot be empty");
-        }
-        if (name.length() < 4) {
-            throw new IllegalArgumentException("Username length should be at least 4 characters");
-        }
-        if (name.length() > 20) {
-            throw new IllegalArgumentException("Username length should be at most 20 characters");
-        }
+        validateUsername(name);
         return new Username(name);
+    }
+
+    private static void validateUsername(String name) {
+        checkIsNullOrEmpty(name);
+        checkLengthIsValid(name);
+    }
+
+    private static void checkIsNullOrEmpty(String name) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Username cannot be null or empty");
+        }
+    }
+
+    private static void checkLengthIsValid(String name) {
+        if (name.length() < 4 || name.length() > 20) {
+            throw new IllegalArgumentException("Username length should be between 4 and 20 characters");
+        }
     }
 }
