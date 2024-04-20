@@ -8,10 +8,10 @@ import lombok.Data;
 @Data
 @Builder
 public class User {
-     String username;
+    String username;
 
     String password;
-    
+
     LocalDate createdAt;
 
     LocalDate lastLoginDate;
