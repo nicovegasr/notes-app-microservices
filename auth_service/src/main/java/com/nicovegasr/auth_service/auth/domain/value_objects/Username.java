@@ -18,6 +18,9 @@ public class Username {
         if (name.length() < 4) {
             throw new IllegalArgumentException("Username length should be at least 4 characters");
         }
+        if (name.length() > 20) {
+            throw new IllegalArgumentException("Username length should be at most 20 characters");
+        }
         return new Username(name);
     }
 }

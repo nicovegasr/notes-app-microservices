@@ -35,4 +35,11 @@ class UsernameTest {
             Username.create("tes");
         });
     }
+
+    @Test
+    void testUsernameWithLengthGreaterThan20() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            Username.create("test_greather_than_20_characters");
+        });
+    }
 }
