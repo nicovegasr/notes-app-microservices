@@ -15,6 +15,9 @@ public class Username {
         if (name.isEmpty()) {
             throw new IllegalArgumentException("Username cannot be empty");
         }
+        if (name.length() < 4) {
+            throw new IllegalArgumentException("Username length should be at least 4 characters");
+        }
         return new Username(name);
     }
 }
