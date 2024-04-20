@@ -9,6 +9,9 @@ public class Username {
     String name;
 
     public static Username create(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException("Username cannot be null");
+        }
         if (name.isEmpty()) {
             throw new IllegalArgumentException("Username cannot be empty");
         }
