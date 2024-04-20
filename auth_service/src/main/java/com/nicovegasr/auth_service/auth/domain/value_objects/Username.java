@@ -9,6 +9,9 @@ public class Username {
     String name;
 
     public static Username build(String name) {
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("Username cannot be empty");
+        }
         return new Username(name);
     }
 }

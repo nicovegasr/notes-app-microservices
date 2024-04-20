@@ -15,9 +15,8 @@ class UsernameTest {
      */
     @Test
     void testUsernameWithEmptyString() {
-        Username username = Username.build("");
         assertThrows(IllegalArgumentException.class, () -> {
-            username.getName();
+            Username.build("");
         });
     }
 }
