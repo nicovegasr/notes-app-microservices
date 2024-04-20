@@ -1,5 +1,6 @@
 package com.nicovegasr.auth_service.unit_test.models;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
@@ -41,5 +42,14 @@ class UsernameTest {
         assertThrows(IllegalArgumentException.class, () -> {
             Username.create("test_greather_than_20_characters");
         });
+    }
+
+    @Test
+    void testUsernameWithValidName() {
+        String usernameToCreate = "test";
+
+        Username username = Username.create(usernameToCreate);
+
+        assertEquals(username.getName(), usernameToCreate);
     }
 }
