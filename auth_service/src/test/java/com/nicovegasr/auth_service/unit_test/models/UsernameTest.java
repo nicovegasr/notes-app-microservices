@@ -12,6 +12,8 @@ class UsernameTest {
      * 1.- Username with empty string should throw an exception
      * 2.- Username with null value should throw an exception
      * 3.- Username with name length less than 4 should throw an exception
+     * 4.- Username with name length greater than 20 should throw an exception
+     * 5.- Username with valid name should be created.
      */
     @Test
     void testUsernameWithEmptyString() {
@@ -24,6 +26,13 @@ class UsernameTest {
     void testUsernameWithNullValue() {
         assertThrows(IllegalArgumentException.class, () -> {
             Username.create(null);
+        });
+    }
+
+    @Test
+    void testUsernameWithLengthLessThan4() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            Username.create("tes");
         });
     }
 }
