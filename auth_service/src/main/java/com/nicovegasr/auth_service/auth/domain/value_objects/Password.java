@@ -1,9 +1,10 @@
 package com.nicovegasr.auth_service.auth.domain.value_objects;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class Password {
     String credential;
