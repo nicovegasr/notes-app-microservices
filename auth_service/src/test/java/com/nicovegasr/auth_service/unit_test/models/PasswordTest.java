@@ -5,7 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import com.nicovegasr.auth_service.auth.domain.value_objects.Password;
+import com.nicovegasr.auth_service.auth.domain.exceptions.password.PasswordEmpty;
+import com.nicovegasr.auth_service.auth.domain.exceptions.password.PasswordIncorrectFormat;
+import com.nicovegasr.auth_service.auth.domain.models.value_objects.Password;
 
 class PasswordTest {
     /**
@@ -19,49 +21,49 @@ class PasswordTest {
 
     @Test
     void testPasswordWithEmptyString() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(PasswordEmpty.class, () -> {
             Password.create("");
         });
     }
 
     @Test
     void testPasswordWithNullValue() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(PasswordEmpty.class, () -> {
             Password.create(null);
         });
     }
 
     @Test
     void testPasswordWithLengthLessThan8() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(PasswordIncorrectFormat.class, () -> {
             Password.create("test");
         });
     }
 
     @Test
     void testPasswordWithoutMayusShouldNotBeCreated() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(PasswordIncorrectFormat.class, () -> {
             Password.create("this_is_a_test_1+");
         });
     }
 
     @Test
     void testPasswordWithoutDigitShouldNotBeCreated() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(PasswordIncorrectFormat.class, () -> {
             Password.create("this_is_a_test_T+");
         });
     }
 
     @Test
     void testPasswordWithoutSpecialCharacterShouldNotBeCreated() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(PasswordIncorrectFormat.class, () -> {
             Password.create("thisIsATest1");
         });
     }
 
     @Test
     void testPasswordWithBlankSpacesShouldNotBeCreated() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(PasswordIncorrectFormat.class, () -> {
             Password.create("thisIs ATest1+");
         });
     }

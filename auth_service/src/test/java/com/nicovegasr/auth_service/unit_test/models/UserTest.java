@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
+import com.nicovegasr.auth_service.auth.domain.exceptions.UserException;
 import com.nicovegasr.auth_service.auth.domain.models.User;
 
 class UserTest {
@@ -20,7 +21,7 @@ class UserTest {
     @Test
     void userWithoutValidUsernameShouldThrowException() {
         LocalDate now = LocalDate.now();
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(UserException.class, () -> {
             User.create("tes", "TestPassword1+", now, now);
         });
     }
@@ -28,7 +29,7 @@ class UserTest {
     @Test
     void userWithoutValidPasswordShouldThrowException() {
         LocalDate now = LocalDate.now();
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(UserException.class, () -> {
             User.create("test", "test", now, now);
         });
     }

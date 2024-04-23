@@ -1,4 +1,7 @@
-package com.nicovegasr.auth_service.auth.domain.value_objects;
+package com.nicovegasr.auth_service.auth.domain.models.value_objects;
+
+import com.nicovegasr.auth_service.auth.domain.exceptions.username.UsernameEmpty;
+import com.nicovegasr.auth_service.auth.domain.exceptions.username.UsernameLengthIncorrect;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -21,13 +24,13 @@ public class Username {
 
     private static void checkIsNullOrEmpty(String name) {
         if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Username cannot be null or empty");
+            throw new UsernameEmpty();
         }
     }
 
     private static void checkLengthIsValid(String name) {
         if (name.length() < 4 || name.length() > 20) {
-            throw new IllegalArgumentException("Username length should be between 4 and 20 characters");
+            throw new UsernameLengthIncorrect();
         }
     }
 }

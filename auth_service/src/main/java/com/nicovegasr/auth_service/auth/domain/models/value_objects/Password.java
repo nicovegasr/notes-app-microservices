@@ -1,4 +1,7 @@
-package com.nicovegasr.auth_service.auth.domain.value_objects;
+package com.nicovegasr.auth_service.auth.domain.models.value_objects;
+
+import com.nicovegasr.auth_service.auth.domain.exceptions.password.PasswordEmpty;
+import com.nicovegasr.auth_service.auth.domain.exceptions.password.PasswordIncorrectFormat;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -26,14 +29,13 @@ public class Password {
                         "(?=.*[A-Z])" +
                         "(?=.*[@#$%^&+=])" +
                         "(?=\\S+$).{8,}$")) {
-            throw new IllegalArgumentException(
-                    "Password should contain at least one digit, one lowercase letter, one uppercase letter, one special character no whitespace and length should be at least 8 characters");
+            throw new PasswordIncorrectFormat(); 
         }
     }
 
     private static void checkIsNullOrEmpty(String password) {
         if (password == null || password.isEmpty()) {
-            throw new IllegalArgumentException("Password cannot be null or empty");
+            throw new PasswordEmpty();
         }
     }
 

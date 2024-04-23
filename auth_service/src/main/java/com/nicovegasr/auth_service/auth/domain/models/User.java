@@ -2,8 +2,8 @@ package com.nicovegasr.auth_service.auth.domain.models;
 
 import java.time.LocalDate;
 
-import com.nicovegasr.auth_service.auth.domain.value_objects.Password;
-import com.nicovegasr.auth_service.auth.domain.value_objects.Username;
+import com.nicovegasr.auth_service.auth.domain.models.value_objects.Password;
+import com.nicovegasr.auth_service.auth.domain.models.value_objects.Username;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

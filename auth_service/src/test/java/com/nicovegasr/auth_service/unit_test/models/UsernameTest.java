@@ -5,7 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import com.nicovegasr.auth_service.auth.domain.value_objects.Username;
+import com.nicovegasr.auth_service.auth.domain.exceptions.username.UsernameEmpty;
+import com.nicovegasr.auth_service.auth.domain.exceptions.username.UsernameLengthIncorrect;
+import com.nicovegasr.auth_service.auth.domain.models.value_objects.Username;
 
 class UsernameTest {
     /**
@@ -18,28 +20,28 @@ class UsernameTest {
      */
     @Test
     void testUsernameWithEmptyString() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(UsernameEmpty.class, () -> {
             Username.create("");
         });
     }
 
     @Test
     void testUsernameWithNullValue() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(UsernameEmpty.class, () -> {
             Username.create(null);
         });
     }
 
     @Test
     void testUsernameWithLengthLessThan4() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(UsernameLengthIncorrect.class, () -> {
             Username.create("tes");
         });
     }
 
     @Test
     void testUsernameWithLengthGreaterThan20() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(UsernameLengthIncorrect.class, () -> {
             Username.create("test_greather_than_20_characters");
         });
     }
