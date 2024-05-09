@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nicovegasr.auth_service.auth.infrastructure.api.requests.CredentialsRequest;
+import com.nicovegasr.auth_service.auth.infrastructure.api.requests.RegisterRequest;
 import com.nicovegasr.auth_service.auth.infrastructure.api.responses.LoginResponse;
 import com.nicovegasr.auth_service.auth.infrastructure.repositories.user_repositories.UserJpaToDomainRepository;
 
@@ -18,9 +18,9 @@ import lombok.RequiredArgsConstructor;
 public class AuthController {
     private final UserJpaToDomainRepository userRepository;
 
-    @PostMapping("/login/credentials")
-    ResponseEntity<LoginResponse> loginWithCredentials(@RequestBody CredentialsRequest credentials) {
-        
+    @PostMapping("/register")
+    ResponseEntity<LoginResponse> registerUser(@RequestBody RegisterRequest credentials) {
+
         return ResponseEntity.ok().build();
     }
 }

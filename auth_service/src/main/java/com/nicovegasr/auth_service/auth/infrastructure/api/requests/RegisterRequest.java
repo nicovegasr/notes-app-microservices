@@ -1,6 +1,6 @@
 package com.nicovegasr.auth_service.auth.infrastructure.api.requests;
 
-public record CredentialsRequest(
+public record RegisterRequest(
         String username,
         String password) {
 }
