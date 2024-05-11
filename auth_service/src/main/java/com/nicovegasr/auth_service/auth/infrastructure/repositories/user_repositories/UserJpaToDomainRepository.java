@@ -12,12 +12,19 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserJpaToDomainRepository implements UserRepository {
     private final UserJpaRepository userJpaRepository;
+    private final UserMapper userMapper;
 
-    public User findUserByUsername(String username) {
-        return UserMapper.toDomainModel(userJpaRepository.findByUsername(username));
+    public User findByUsername(String username) {
+        return userMapper.toDomainModel(userJpaRepository.findByUsername(username));
     }
 
-    public User saveUser(User user) {
-        return UserMapper.toDomainModel(userJpaRepository.save(UserMapper.toEntity(user)));
+    public User save(User user) {
+        return userMapper.toDomainModel(
+                userJpaRepository.save(
+                        userMapper.toEntity(user)));
+    }
+
+    public boolean existsByUsername(String username) {
+        return userJpaRepository.existsByUsername(username);
     }
 }

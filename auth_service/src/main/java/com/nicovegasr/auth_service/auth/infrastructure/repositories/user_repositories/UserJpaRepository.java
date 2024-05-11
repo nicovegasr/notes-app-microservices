@@ -8,4 +8,6 @@ import com.nicovegasr.auth_service.auth.infrastructure.entities.UserEntity;
 @Repository
 public interface UserJpaRepository extends JpaRepository<UserEntity, String> {
     UserEntity findByUsername(String username);
+
+    boolean existsByUsername(String username);
 }

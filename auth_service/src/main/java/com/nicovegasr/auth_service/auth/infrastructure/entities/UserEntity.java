@@ -24,10 +24,10 @@ public class UserEntity {
 
     @Column(name = "password", nullable = false)
     String password;
-    
+
     @Column(name = "created_at", nullable = false)
     LocalDate createdAt;
 
-    @Column(name = "last_login_date", nullable = false)
+    @Column(name = "last_login_date")
     LocalDate lastLoginDate;
 }

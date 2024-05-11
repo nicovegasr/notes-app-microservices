@@ -1,6 +1,7 @@
 package com.nicovegasr.auth_service.auth.infrastructure.mappers;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import com.nicovegasr.auth_service.auth.application.usecases.DecryptPassword;
 import com.nicovegasr.auth_service.auth.application.usecases.EncryptPassword;
@@ -9,17 +10,20 @@ import com.nicovegasr.auth_service.auth.infrastructure.entities.UserEntity;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
+@Component
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@RequiredArgsConstructor
 public class UserMapper {
 
     @Value("${cipher.algorithm}")
-    private static String cipherAlgorithm;
+    private String cipherAlgorithm;
 
-    @Value("${secret.key}")
-    private static String secretKey;
+    @Value("${auth.secret.key}")
+    private String secretKey;
 
-    public static User toDomainModel(UserEntity userEntity) {
+    public User toDomainModel(UserEntity userEntity) {
         String decryptedPassword = DecryptPassword.decrypt(userEntity.getPassword(), secretKey, cipherAlgorithm);
         return User.create(
                 userEntity.getUsername(),
@@ -28,7 +32,7 @@ public class UserMapper {
                 userEntity.getLastLoginDate());
     }
 
-    public static UserEntity toEntity(User user) {
+    public UserEntity toEntity(User user) {
         String encryptedPassword = EncryptPassword.encrypt(user.getPassword().getCredential(),
                 secretKey,
                 cipherAlgorithm);
