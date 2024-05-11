@@ -1,12 +1,10 @@
-package com.nicovegasr.auth_service.auth.infrastructure.repositories.user_repositories;
-
-import org.springframework.stereotype.Repository;
+package com.nicovegasr.auth_service.auth.infrastructure.repositories;
 
 import com.nicovegasr.auth_service.auth.domain.models.User;
 import com.nicovegasr.auth_service.auth.domain.repositories.UserRepository;
 import com.nicovegasr.auth_service.auth.infrastructure.mappers.UserMapper;
-
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 @Repository
 @AllArgsConstructor

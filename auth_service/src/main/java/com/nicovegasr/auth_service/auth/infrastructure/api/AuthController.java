@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nicovegasr.auth_service.auth.application.usecases.RegisterUser;
 import com.nicovegasr.auth_service.auth.infrastructure.api.requests.RegisterRequest;
-import com.nicovegasr.auth_service.auth.infrastructure.repositories.user_repositories.UserJpaToDomainRepository;
+import com.nicovegasr.auth_service.auth.infrastructure.repositories.UserJpaToDomainRepository;
 
 import lombok.RequiredArgsConstructor;
 
