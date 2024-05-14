@@ -12,38 +12,38 @@ import com.nicovegasr.auth_service.auth.domain.models.value_objects.Username;
 class UsernameTest {
     /**
      * Use cases:
-     * 1.- Username with empty string should throw an exception
-     * 2.- Username with null value should throw an exception
-     * 3.- Username with name length less than 4 should throw an exception
-     * 4.- Username with name length greater than 20 should throw an exception
-     * 5.- Username with valid name should be created.
+     * 1. Username with empty string should throw an exception
+     * 2. Username with null value should throw an exception
+     * 3. Username with name length less than 4 should throw an exception
+     * 4. Username with name length greater than 20 should throw an exception
+     * 5. Username with valid name should be created.
      */
     @Test
     void testUsernameWithEmptyString() {
-        assertThrows(UsernameEmpty.class, () -> {
-            Username.create("");
-        });
+        assertThrows(UsernameEmpty.class, () ->
+            Username.create("")
+        );
     }
 
     @Test
     void testUsernameWithNullValue() {
-        assertThrows(UsernameEmpty.class, () -> {
-            Username.create(null);
-        });
+        assertThrows(UsernameEmpty.class, () ->
+            Username.create(null)
+        );
     }
 
     @Test
     void testUsernameWithLengthLessThan4() {
-        assertThrows(UsernameLengthIncorrect.class, () -> {
-            Username.create("tes");
-        });
+        assertThrows(UsernameLengthIncorrect.class, () ->
+            Username.create("tes")
+        );
     }
 
     @Test
     void testUsernameWithLengthGreaterThan20() {
-        assertThrows(UsernameLengthIncorrect.class, () -> {
-            Username.create("test_greather_than_20_characters");
-        });
+        assertThrows(UsernameLengthIncorrect.class, () ->
+            Username.create("test_greather_than_20_characters")
+        );
     }
 
     @Test
