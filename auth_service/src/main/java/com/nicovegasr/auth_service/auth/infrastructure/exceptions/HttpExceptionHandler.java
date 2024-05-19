@@ -1,5 +1,6 @@
 package com.nicovegasr.auth_service.auth.infrastructure.exceptions;
 
+import com.nicovegasr.auth_service.auth.application.exceptions.AuthenticationError;
 import com.nicovegasr.auth_service.auth.domain.exceptions.UserException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,11 @@ public class HttpExceptionHandler {
         return ResponseEntity.status(code).body(userException.getMessage());
     }
 
+    @ExceptionHandler(AuthenticationError.class)
+    public ResponseEntity<String> handleLoginException(AuthenticationError authError) {
+        log.error("Auth exception:{}", authError.getMessage());
+        return ResponseEntity.status(401).body("Unauthorized");
+    }
     private Integer getUserExceptionStatus(UserException userException) {
         return switch (userException.getClass().getSimpleName()) {
             case "UsernameEmpty", "PasswordEmpty", "UsernameLengthIncorrect", "PasswordIncorrectFormat" -> 400;
@@ -24,4 +30,5 @@ public class HttpExceptionHandler {
             default -> 500;
         };
     }
+
 }

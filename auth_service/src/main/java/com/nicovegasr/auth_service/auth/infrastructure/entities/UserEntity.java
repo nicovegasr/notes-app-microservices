@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "users", schema = "notes")
+@Table(name = "users", schema = "auth")
 public class UserEntity {
     @Id
     @Column(name = "username", nullable = false, unique = true)
