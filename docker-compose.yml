@@ -1,17 +1,27 @@
-version: '3'
-
 services:
-  db-notes:
-    container_name: notes-db
+  db-auth:
+    container_name: auth-db
     image: postgres:16.2
     restart: unless-stopped
     environment:
       POSTGRES_USER: notes
       POSTGRES_PASSWORD: notes
-      POSTGRES_DB: notes
+      POSTGRES_DB: auth
+    volumes:
+      - ./initdb:/docker-entrypoint-initdb.d
     ports:
       - 5432:5432
-    expose: 
+    expose:
       - 5432
-    command:
-      -p 5432
+  db-mongo:
+    container_name: mongo-db
+    image: mongo:6.0
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: notes
+      MONGO_INITDB_ROOT_PASSWORD: notes
+      MONGO_INITDB_DATABASE: notes
+    ports:
+      - 27017:27017
+    expose:
+      - 27017
