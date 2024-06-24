@@ -52,6 +52,6 @@ class UsernameTest {
 
         Username username = Username.create(usernameToCreate);
 
-        assertEquals(username.getName(), usernameToCreate);
+        assertEquals(username.getValue(), usernameToCreate);
     }
 }

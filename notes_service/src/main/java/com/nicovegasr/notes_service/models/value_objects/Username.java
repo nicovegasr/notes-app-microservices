@@ -9,7 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class Username {
-    String name;
+    String value;
 
     public static Username create(String name) {
         validateUsername(name);

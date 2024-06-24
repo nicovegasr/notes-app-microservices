@@ -5,7 +5,7 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -14,5 +14,5 @@ public class Layout {
     @Id
     private String username;
     private String email;
-    private List<Folder> folders;
+    private Set<Folder> folders;
 }
