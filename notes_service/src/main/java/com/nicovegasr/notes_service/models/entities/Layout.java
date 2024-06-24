@@ -9,8 +9,8 @@ import java.util.List;
 
 @Data
 @Builder
-@Document(collection = "users")
-public class User {
+@Document(collection = "layouts")
+public class Layout {
     @Id
     private String username;
     private String email;

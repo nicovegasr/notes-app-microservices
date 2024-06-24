@@ -1,8 +1,8 @@
 package com.nicovegasr.notes_service.exceptions.username;
 
-import com.nicovegasr.notes_service.exceptions.UserException;
+import com.nicovegasr.notes_service.exceptions.LayoutException;
 
-public class UsernameEmpty extends UserException {
+public class UsernameEmpty extends LayoutException {
     public UsernameEmpty() {
         super("Username cannot be null or empty");
     }
