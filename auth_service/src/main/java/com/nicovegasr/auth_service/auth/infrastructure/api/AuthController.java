@@ -28,6 +28,7 @@ public class AuthController {
         RegisterUser.register(
                 userRepository,
                 credentials.username(),
+                credentials.email(),
                 credentials.password());
         return ResponseEntity.ok().build();
     }

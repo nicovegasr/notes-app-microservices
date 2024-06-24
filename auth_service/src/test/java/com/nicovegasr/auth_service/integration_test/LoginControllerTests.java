@@ -25,7 +25,7 @@ class LoginControllerTests {
         String requestBody = "{\"username\": \"test_user\", \"password\": \"test_password\"}";
 
         ResultActions resultActions = mockMvc.perform(
-            MockMvcRequestBuilders.post("/auth/login/credentials")
+            MockMvcRequestBuilders.post("/auth/login")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(requestBody)
         );
