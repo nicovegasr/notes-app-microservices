@@ -11,11 +11,11 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class RegisterUser {
-    public static void register(UserRepository userRepository, String username, String password) {
+    public static void register(UserRepository userRepository, String username, String email, String password) {
         if (userRepository.existsByUsername(username)) {
             throw new UsernameAlreadyExist();
         }
-        User user = User.create(username, password, LocalDate.now(), null);
+        User user = User.create(username, password, email, LocalDate.now(), null);
         userRepository.save(user);
     }
 }

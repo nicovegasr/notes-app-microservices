@@ -22,7 +22,7 @@ class UserTest {
     void userWithoutValidUsernameShouldThrowException() {
         LocalDate now = LocalDate.now();
         assertThrows(UserException.class, () -> {
-            User.create("tes", "TestPassword1+", now, now);
+            User.create("tes", "TestPassword1+", "email@email.com", now, now);
         });
     }
 
@@ -30,14 +30,14 @@ class UserTest {
     void userWithoutValidPasswordShouldThrowException() {
         LocalDate now = LocalDate.now();
         assertThrows(UserException.class, () -> {
-            User.create("test", "test", now, now);
+            User.create("test", "test", "email@email.com", now, now);
         });
     }
 
     @Test
     void createUserWithValidUsernameAndPassword() {
         LocalDate now = LocalDate.now();
-        User user = User.create("test", "TestPassword1+", now, now);
+        User user = User.create("test", "TestPassword1+", "email@email.com", now, now);
 
         assertEquals("test", user.getUsername().getName());
         assertEquals("TestPassword1+", user.getPassword().getCredential());
