@@ -1,16 +1,17 @@
 package com.nicovegasr.notes_service.services;
 
+import java.util.HashSet;
+
+import org.jetbrains.annotations.NotNull;
+import org.springframework.stereotype.Component;
+
 import com.nicovegasr.notes_service.models.entities.Folder;
 import com.nicovegasr.notes_service.models.entities.Layout;
 import com.nicovegasr.notes_service.models.value_objects.Email;
 import com.nicovegasr.notes_service.models.value_objects.Username;
 import com.nicovegasr.notes_service.repositories.LayoutRepository;
-import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
