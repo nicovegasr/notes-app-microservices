@@ -8,7 +8,7 @@ interface UserFormProps {
 }
 
 export const UserForm = ({ mode, onSend }: UserFormProps) => {
-    const [user, setUser] = useState<User>({ username: '', password: '' });
+    const [user, setUser] = useState<User>({ username: '', email: '', password: '' } as User);
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
@@ -27,6 +27,18 @@ export const UserForm = ({ mode, onSend }: UserFormProps) => {
                     onChange={handleInputChange}
                 />
             </div>
+            {mode === 'register' &&
+                <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+                    <Input
+                        name="email"
+                        label="Email"
+                        variant="underlined"
+                        placeholder="Email"
+                        fullWidth
+                        onChange={handleInputChange}
+                    />
+                </div>
+            }
             <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                 <Input
                     name="password"
