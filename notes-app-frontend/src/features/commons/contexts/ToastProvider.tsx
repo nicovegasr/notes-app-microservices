@@ -32,7 +32,7 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) =
             {children}
             {createPortal(
                 toasts.map((toast, index) => (
-                    <div className="bg-black flex justify-end mr-4 mt-4">
+                    <div className="flex justify-end mr-4 mt-4">
                         <Toast
                             key={index}
                             message={toast.message}
