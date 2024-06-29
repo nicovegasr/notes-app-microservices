@@ -10,6 +10,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const routerWithoutAuth = ["/login", "/register"];
 
+    console.log(user)
     const login = (user: User) => {
         setUser(user);
     }
@@ -19,8 +20,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
 
     const contextValue = useMemo(() => ({
-        login, logout
-    }), []);
+        login, logout, user
+    }), [user]);
 
     useEffect(() => {
         if (!user && !routerWithoutAuth.includes(location.pathname)) {

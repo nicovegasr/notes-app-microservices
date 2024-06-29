@@ -1,3 +1,10 @@
+import { User } from "@/src/models/User";
 import { createContext } from "react";
 
-export const AuthContext = createContext({} as any);
+interface AuthContextType {
+    user?: User;
+    login: (user: User) => void;
+    logout: () => void;
+}
+
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
