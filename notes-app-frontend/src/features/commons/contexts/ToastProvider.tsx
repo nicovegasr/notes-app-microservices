@@ -1,7 +1,7 @@
-import React, { ReactNode, useEffect, useMemo, useState } from "react";
+import React, { ReactNode, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { Toast, ToastTypes } from "../components/Toast";
 import { ToastContext } from "./ToastContext";
-import { createPortal } from "react-dom";
 
 interface ToastProps {
     message: string;
@@ -11,14 +11,13 @@ interface ToastProps {
 export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [toasts, setToasts] = useState<ToastProps[]>([]);
 
-    useEffect(() => {
-        if (toasts.length >= 3) {
-            setToasts((old) => old.slice(0, 3));
-        }
-    }, [toasts.length])
-
     const add = (message: string, type: ToastTypes) => {
-        setToasts((old) => [...old, { message, type }]);
+        setToasts((old) => {
+            if (old.length >= 3) {
+                return old;
+            }
+            return [...old, { message, type }]
+        });
     };
 
     const remove = (index: number) => {
@@ -32,7 +31,7 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) =
             {children}
             {createPortal(
                 toasts.map((toast, index) => (
-                    <div className="flex justify-end mr-4 mt-4">
+                    <div className="flex justify-end mr-4 mt-1">
                         <Toast
                             key={index}
                             message={toast.message}

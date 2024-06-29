@@ -9,13 +9,13 @@ export const UserWithoutFolders = () => {
     const toast = useToast();
 
     const validateFolderName = () => {
-        if (folderName.length >= 0) {
+        if (folderName.length <= 0) {
             toast.add("Folder name can`t be empty", "warning");
             return false
         }
         return true
-
     }
+
     const createFolder = () => {
         if (!validateFolderName()) return;
         console.log(folderName);
