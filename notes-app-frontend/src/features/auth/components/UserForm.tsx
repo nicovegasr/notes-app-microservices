@@ -1,5 +1,5 @@
 import { Button, Input } from "@nextui-org/react";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { User } from "../../../models/User";
 
 interface UserFormProps {
@@ -15,9 +15,14 @@ export const UserForm = ({ mode, onSend }: UserFormProps) => {
         setUser({ ...user, [name]: value });
     };
 
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        onSend(user);
+    };
+
     return (
-        <>
-            <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+        <form className="h-full w-full" onSubmit={handleSubmit}>
+            <div className="flex w-full flex-wrap md:flex-nowrap mb-4">
                 <Input
                     name="username"
                     label="Username"
@@ -28,7 +33,7 @@ export const UserForm = ({ mode, onSend }: UserFormProps) => {
                 />
             </div>
             {mode === 'register' &&
-                <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+                <div className="flex w-full flex-wrap md:flex-nowrap mb-4">
                     <Input
                         name="email"
                         label="Email"
@@ -39,7 +44,7 @@ export const UserForm = ({ mode, onSend }: UserFormProps) => {
                     />
                 </div>
             }
-            <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+            <div className="flex w-full flex-wrap md:flex-nowrap mb-4">
                 <Input
                     name="password"
                     label="Password"
@@ -51,11 +56,12 @@ export const UserForm = ({ mode, onSend }: UserFormProps) => {
                 />
             </div>
             <Button
+                type="submit"
                 className="w-full py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300"
-                onClick={() => onSend(user)}
+                //onClick={() => onSend(user)}
             >
                 {mode === 'login' ? 'Login' : 'Register'}
             </Button>
-        </>
+        </form>
     )
 }
