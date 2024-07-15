@@ -1,8 +1,8 @@
 package com.nicovegasr.notes_service.repositories;
 
-import com.nicovegasr.notes_service.models.entities.Layout;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import com.nicovegasr.notes_service.models.entities.Layout;
+
 public interface LayoutRepository extends MongoRepository<Layout, String> {
-    Layout findByUsername(String username);
 }

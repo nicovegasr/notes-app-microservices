@@ -1,11 +1,12 @@
 package com.nicovegasr.notes_service.models.entities;
 
-import lombok.Builder;
-import lombok.Data;
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Set;
+import lombok.Builder;
+import lombok.Data;
 
 @Data
 @Builder
@@ -14,5 +15,5 @@ public class Layout {
     @Id
     private String username;
     private String email;
-    private Set<Folder> folders;
+    private List<Folder> folders;
 }

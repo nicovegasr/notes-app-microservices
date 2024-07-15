@@ -12,11 +12,11 @@ import com.nicovegasr.notes_service.services.LayoutService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/layout")
+@RequestMapping("/layouts")
 @RequiredArgsConstructor
-public class UserLayoutController {
+public class LayoutsController {
     private final LayoutService layoutService;
-
+    
     @GetMapping("")
     public ResponseEntity<Layout> getUserLayout(@RequestParam String username, @RequestParam String email) {
         return ResponseEntity.ok().body(layoutService.getLayout(username, email));

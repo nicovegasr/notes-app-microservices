@@ -1,11 +1,10 @@
 package com.nicovegasr.notes_service.services;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
-import com.nicovegasr.notes_service.models.entities.Folder;
 import com.nicovegasr.notes_service.models.entities.Layout;
 import com.nicovegasr.notes_service.models.value_objects.Email;
 import com.nicovegasr.notes_service.models.value_objects.Username;
@@ -21,9 +20,8 @@ public class LayoutService {
     public Layout getLayout(String name, String mail) {
         Username username = Username.create(name);
         Email email = Email.create(mail);
-        Layout layoutNotes = layoutRepository.findByUsername(username.getValue());
-        boolean userDontHaveLayout = layoutNotes == null;
-        if (userDontHaveLayout) {
+        Layout layoutNotes = layoutRepository.findById(username.getValue()).orElse(null);
+        if (layoutNotes == null) {
             layoutNotes = createLayout(username, email);
         }
         return layoutNotes;
@@ -34,7 +32,7 @@ public class LayoutService {
         layoutNotes = Layout.builder()
                 .username(username.getValue())
                 .email(email.getValue())
-                .folders(new HashSet<Folder>())
+                .folders(new ArrayList<>())
                 .build();
         layoutNotes = layoutRepository.save(layoutNotes);
         return layoutNotes;
