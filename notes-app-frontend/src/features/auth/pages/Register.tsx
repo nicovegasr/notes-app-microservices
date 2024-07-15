@@ -18,8 +18,15 @@ export const Register = () => {
             toast.add("User registered successfully", "success");
             navigate("/login");
         }).catch((error) => {
-            const message = error.response?.data as string || "Network error";
-            toast.add(message, "error");
+            const message = error.response?.data
+            switch (typeof message) {
+                case "string":
+                    toast.add(message, "error");
+                    break;
+                default:
+                    toast.add("An error occurred while registering the user", "error");
+                    break;
+            }
         })
     }
 

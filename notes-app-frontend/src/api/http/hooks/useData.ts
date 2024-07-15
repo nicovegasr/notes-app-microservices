@@ -20,6 +20,7 @@ export const useData = <T>({ key, fetcher, enabled }: UseData<T>): Response<T> =
             queryFn: fetcher,
             enabled: enabled ?? true,
             refetchOnWindowFocus: false,
+            refetchOnMount: false
         },)
     return { data, status }
 }

@@ -13,10 +13,7 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
     const add = (message: string, type: ToastTypes) => {
         setToasts((old) => {
-            if (old.length >= 3) {
-                return old;
-            }
-            return [...old, { message, type }]
+            return [...old, { message, type }];
         });
     };
 
@@ -30,15 +27,17 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         <ToastContext.Provider value={contextValue}>
             {children}
             {createPortal(
-                toasts.map((toast, index) => (
-                    <div className="flex justify-end mr-4 mt-1">
+                <div className="toast fixed bottom-0 right-0 m-4 flex flex-col-reverse space-y-1 space-y-reverse">
+                    {toasts.map((toast, index) => (
                         <Toast
                             key={index}
+                            index={index}
                             message={toast.message}
                             type={toast.type}
-                            onClose={() => remove(index)} />
-                    </div>
-                )),
+                            onClose={remove}
+                        />
+                    ))}
+                </div>,
                 document.body
             )}
         </ToastContext.Provider>

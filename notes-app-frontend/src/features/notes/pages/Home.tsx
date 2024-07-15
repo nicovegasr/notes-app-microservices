@@ -1,24 +1,25 @@
 import { Layout } from "@/src/models/Layout";
 import NotesRepository from "../../../repositories/NotesRepository";
 import { LoadingUserNotes } from "../atomic/LoadingUserNotes";
-import { UserWithoutFolders } from "../components/UserWithoutFolders";
+import { UserLayout } from "../layouts/UserLayout";
+import { UserWithoutFolders } from "../usecases/UserWithoutFolders";
 
 export const Home = () => {
-
-    const { getNotesQuery } = NotesRepository();
-
-    console.log(getNotesQuery);
+    const { getLayout } = NotesRepository();
 
     return (
-        <div className="absolute h-4/6 w-full flex flex-col items-center justify-center">
-
-            {getNotesQuery.data && (getNotesQuery.data as Layout).folders.length === 0 &&
+        <>
+            {getLayout.data && (getLayout.data as Layout).folders.length > 0 && (
+                <UserLayout
+                    layout={getLayout.data as Layout}
+                />
+            )}
+            {getLayout.data && (getLayout.data as Layout).folders.length === 0 && (
                 <UserWithoutFolders />
-            }
-            {getNotesQuery.status == "pending" &&
+            )}
+            {getLayout.status === "pending" && (
                 <LoadingUserNotes />
-            }
-
-        </div>
+            )}
+        </>
     );
 }
