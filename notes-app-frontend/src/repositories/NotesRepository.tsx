@@ -2,10 +2,10 @@
 import { useContext } from "react";
 import { http } from "../api/http/axios";
 import { useData } from "../api/http/hooks/useData";
+import { useDataMutation } from "../api/http/hooks/useMutation";
 import { envs } from "../environment/getEnvs";
 import { AuthContext } from "../features/auth/context/AuthContext";
 import { Layout } from "../models/Layout";
-import { useDataMutation } from "../api/http/hooks/useMutation";
 import { Note } from "../models/Note";
 
 interface CreateFolder {
@@ -32,7 +32,7 @@ const NotesRepository = () => {
             enabled: !!folderId && !!user
         })
     }
-    
+
     const {
         mutate: createFolderMutation,
     } = useDataMutation<CreateFolder>({
@@ -44,10 +44,37 @@ const NotesRepository = () => {
         return await createFolderMutation(createFolder);
     }
 
+    const {
+        mutate: createNoteMutation,
+    } = useDataMutation<Note>({
+        key: 'notes',
+        mutation: (noteToCreate: Note) => http.post<Note, Note>(baseUrl + "/api/v1/notes", { ...noteToCreate, username: user?.username as string }),
+    })
+
+    const createNoteQuery = async (noteToCreate: Note) => {
+        return await createNoteMutation(noteToCreate);
+    }
+
+    const {
+        mutate: deleteNoteMutation,
+    } = useDataMutation<Note>({
+        key: 'notes',
+        mutation: (notetoDelete: Note) => http.delete<Note>(baseUrl + "/api/v1/notes/" +
+            notetoDelete.noteId +
+            "?username=" + user?.username +
+            "&folderId=" + notetoDelete.folderId),
+    })
+
+    const deleteNoteQuery = async (notetoDelete: Note) => {
+        return await deleteNoteMutation(notetoDelete);
+    }
+
     return {
         getLayout,
         getNotesByFolder,
-        createFolderQuery
+        createFolderQuery,
+        createNoteQuery,
+        deleteNoteQuery
     }
 }
 

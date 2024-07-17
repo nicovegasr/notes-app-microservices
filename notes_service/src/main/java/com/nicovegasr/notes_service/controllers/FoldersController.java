@@ -50,7 +50,8 @@ public class FoldersController {
 
     @GetMapping("/{folderId}/notes")
     public ResponseEntity<List<Note>> getFolderNoyes(@PathVariable String folderId, @RequestParam String username) {
-        Layout userLayout = layoutRepository.findById(username)
+        Username usernameVo = Username.create(username);
+        Layout userLayout = layoutRepository.findById(usernameVo.getValue())
                 .orElseThrow(() -> new RuntimeException("User layout not found"));
         Folder folder = userLayout.getFolders().stream()
                 .filter(folderToGet -> folderToGet.getFolderId().equals(folderId))

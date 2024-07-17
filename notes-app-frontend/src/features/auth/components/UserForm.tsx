@@ -58,7 +58,6 @@ export const UserForm = ({ mode, onSend }: UserFormProps) => {
             <Button
                 type="submit"
                 className="w-full py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300"
-                //onClick={() => onSend(user)}
             >
                 {mode === 'login' ? 'Login' : 'Register'}
             </Button>

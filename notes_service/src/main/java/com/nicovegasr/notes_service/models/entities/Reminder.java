@@ -7,6 +7,6 @@ import lombok.Data;
 @Builder
 public class Reminder {
     private String reminderId;
-    private String datetime;
-    private String message;
+    private String date;
+    private String text;
 }

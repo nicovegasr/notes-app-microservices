@@ -1,5 +1,5 @@
 export interface Reminder {
     reminderId: string
-    datetime: Date
-    message: string
+    date: string
+    text: string
 }

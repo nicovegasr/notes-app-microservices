@@ -18,7 +18,14 @@ const post = async <T, K>(url: string, body: K, headers?: Headers): Promise<T> =
     return response.data;
 }
 
+const axiosDelete = async <T>(url: string, headers?: Headers): Promise<T> => {
+    const response = await axios.delete<T>(url, { headers });
+    return response.data;
+}
+
+
 export const http = {
     get,
-    post
+    post,
+    delete: axiosDelete
 }

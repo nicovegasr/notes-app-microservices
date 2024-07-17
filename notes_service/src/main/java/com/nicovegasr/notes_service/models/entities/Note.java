@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 @Builder
 public class Note {
-    private Long noteId;
+    private String noteId;
     private String title;
     private String content;
     private List<Reminder> reminders;
