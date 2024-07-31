@@ -1,16 +1,15 @@
-package com.nicovegasr.notes_service.models.entities;
+package com.nicovegasr.notes_service.models.dtos;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.List;
+
+import com.nicovegasr.notes_service.models.entities.Reminder;
 
 import lombok.Builder;
 import lombok.Data;
 
-@Data
 @Builder
-@Document(collection = "notes")
-public class Note {
-    @Id
+@Data
+public class DetailedNote {
     private String noteId;
     private String title;
     private String content;
@@ -18,4 +17,5 @@ public class Note {
     private String username;
     private String createdAt;
     private String updatedAt;
+    private List<Reminder> reminders;
 }

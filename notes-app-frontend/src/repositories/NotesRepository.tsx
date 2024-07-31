@@ -5,7 +5,7 @@ import { useData } from "../api/http/hooks/useData";
 import { useDataMutation } from "../api/http/hooks/useMutation";
 import { envs } from "../environment/getEnvs";
 import { AuthContext } from "../features/auth/context/AuthContext";
-import { Layout } from "../models/Layout";
+import { Folder } from "../models/Folder";
 import { Note } from "../models/Note";
 
 interface CreateFolder {
@@ -19,9 +19,9 @@ const NotesRepository = () => {
 
     const baseUrl = envs.notes_url;
 
-    const getLayout = useData<Layout>({
-        key: 'layout',
-        fetcher: () => http.get<Layout>(baseUrl + `/api/v1/layouts?username=${user?.username}&email=${user?.email}`),
+    const getFolders = useData<Folder[]>({
+        key: 'folders',
+        fetcher: () => http.get<Folder[]>(baseUrl + `/api/v1/folders?username=${user?.username}`),
         enabled: !!user
     })
 
@@ -36,7 +36,7 @@ const NotesRepository = () => {
     const {
         mutate: createFolderMutation,
     } = useDataMutation<CreateFolder>({
-        key: 'layout',
+        key: 'folders',
         mutation: (createFolder: CreateFolder) => http.post<CreateFolder, CreateFolder>(baseUrl + "/api/v1/folders", createFolder),
     })
 
@@ -70,7 +70,7 @@ const NotesRepository = () => {
     }
 
     return {
-        getLayout,
+        getFolders,
         getNotesByFolder,
         createFolderQuery,
         createNoteQuery,

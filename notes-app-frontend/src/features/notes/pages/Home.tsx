@@ -1,23 +1,25 @@
-import { Layout } from "@/src/models/Layout";
-import NotesRepository from "../../../repositories/NotesRepository";
+import { Folder } from "@/src/models/Folder";
+import FolderRepository from "../../../repositories/FolderRepository";
 import { LoadingUserNotes } from "../atomic/LoadingUserNotes";
 import { UserLayout } from "../layouts/UserLayout";
 import { UserWithoutFolders } from "../usecases/UserWithoutFolders";
 
 export const Home = () => {
-    const { getLayout } = NotesRepository();
+    const { getFolders } = FolderRepository();
+
+    const folders: Folder[] | undefined = getFolders.data;
 
     return (
         <>
-            {getLayout.data && (getLayout.data as Layout).folders.length > 0 && (
+            {folders && folders.length > 0 && (
                 <UserLayout
-                    layout={getLayout.data as Layout}
+                    folders={folders}
                 />
             )}
-            {getLayout.data && (getLayout.data as Layout).folders.length === 0 && (
+            {folders && folders.length === 0 && (
                 <UserWithoutFolders />
             )}
-            {getLayout.status === "pending" && (
+            {getFolders.status === "pending" && (
                 <LoadingUserNotes />
             )}
         </>

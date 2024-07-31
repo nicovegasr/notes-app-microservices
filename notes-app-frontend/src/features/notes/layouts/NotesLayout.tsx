@@ -3,8 +3,8 @@ import { Note } from "@/src/models/Note";
 import { Button } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
 import NotesRepository from "../../../repositories/NotesRepository";
-import { NoteCard } from "../components/NoteCard";
 import { useToast } from "../../commons/hooks/useToasts";
+import { NoteCard } from "../components/NoteCard";
 
 interface NotesLayoutProps {
     folder: Folder;
@@ -57,7 +57,7 @@ export const NotesLayout = ({ folder }: NotesLayoutProps) => {
             {folderWithNotes() &&
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
                     {notes
-                        .sort((a, b) => new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime())
+                        .sort((a, b) => new Date(b.createdAt as string).getTime() - new Date(a.createdAt as string).getTime())
                         .map((note) => (
                             <NoteCard
                                 key={note.noteId}

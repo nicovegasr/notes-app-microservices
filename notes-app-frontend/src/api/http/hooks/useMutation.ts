@@ -10,8 +10,9 @@ export const useDataMutation = <T>({ key, mutation }: UseDataMutation<T>) => {
     const queryClient = useQueryClient()
 
     const mutate = async (data: T) => {
-        await reactQueryMutate(data)
+        await reactQueryMutate(data).finally()
         await queryClient.invalidateQueries({ queryKey: [key] })
+        
     }
 
     return { mutate, status, data }

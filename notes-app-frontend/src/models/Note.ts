@@ -2,10 +2,11 @@ import { Reminder } from "./Reminder";
 
 export interface Note {
     noteId: string;
-    folderId: string;
     title: string;
     content: string;
-    reminders: Reminder[];
-    creationDate: string;
+    folderId: string;
     username?: string;
+    createdAt?: string;
+    updatedAt?: string;
+    reminders?: Reminder[];
 }

@@ -1,6 +1,6 @@
+import FolderRepository from "../../../repositories/FolderRepository";
 import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/react";
 import { useContext, useState } from "react";
-import NotesRepository from "../../../repositories/NotesRepository";
 import { AuthContext } from "../../auth/context/AuthContext";
 import { useToast } from "../../commons/hooks/useToasts";
 
@@ -8,7 +8,7 @@ export const UserWithoutFolders = () => {
     const { isOpen, onClose, onOpen, onOpenChange } = useDisclosure();
     const [folderName, setFolderName] = useState<string>('');
 
-    const { createFolderQuery } = NotesRepository();
+    const { createFolderQuery } = FolderRepository();
     const user = useContext(AuthContext)?.user;
 
     const toast = useToast();
@@ -24,7 +24,6 @@ export const UserWithoutFolders = () => {
     const createFolder = () => {
         if (!validateFolderName()) return;
         createFolderQuery({ name: folderName, user: user?.username as string })
-        console.log(folderName);
         handleClose();
     }
 

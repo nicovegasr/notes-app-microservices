@@ -1,8 +1,8 @@
 import { Note } from "@/src/models/Note";
-import { Reminder } from "../../../models/Reminder";
 import { CalendarIcon } from '@heroicons/react/24/outline';
 import { Button, Card, CardBody, Chip, Input, Textarea } from "@nextui-org/react";
 import { useState } from "react";
+import { Reminder } from "../../../models/Reminder";
 
 interface NoteFormParams {
     folderId: string;
@@ -17,7 +17,6 @@ export const NoteForm = ({ note, folderId, onClick }: NoteFormParams) => {
         title: "",
         content: "",
         reminders: [],
-        creationDate: new Date().toISOString()
     });
 
     const [reminderText, setReminderText] = useState("");
@@ -31,7 +30,7 @@ export const NoteForm = ({ note, folderId, onClick }: NoteFormParams) => {
         if (reminderText && reminderDate) {
             setNoteForm(prev => ({
                 ...prev,
-                reminders: [...prev.reminders, { text: reminderText, date: reminderDate } as Reminder]
+                reminders: [...prev.reminders as Reminder[], { text: reminderText, date: reminderDate } as Reminder]
             }));
             setReminderText("");
             setReminderDate("");
@@ -41,7 +40,7 @@ export const NoteForm = ({ note, folderId, onClick }: NoteFormParams) => {
     const removeReminder = (index: number) => {
         setNoteForm(prev => ({
             ...prev,
-            reminders: prev.reminders.filter((_, i) => i !== index)
+            reminders: prev.reminders?.filter((_, i) => i !== index)
         }));
     };
 
@@ -97,7 +96,7 @@ export const NoteForm = ({ note, folderId, onClick }: NoteFormParams) => {
                         <Button color="primary" size="lg" onClick={addReminder}>Add</Button>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-2">
-                        {noteForm.reminders.map((reminder, index) => (
+                        {noteForm.reminders?.map((reminder, index) => (
                             <Chip
                                 key={index}
                                 onClose={() => removeReminder(index)}
