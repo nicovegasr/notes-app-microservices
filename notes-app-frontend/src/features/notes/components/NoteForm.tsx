@@ -11,6 +11,7 @@ interface NoteFormParams {
 }
 
 export const NoteForm = ({ note, folderId, onClick }: NoteFormParams) => {
+    
     const [noteForm, setNoteForm] = useState<Note>(note || {
         noteId: "",
         folderId: folderId,

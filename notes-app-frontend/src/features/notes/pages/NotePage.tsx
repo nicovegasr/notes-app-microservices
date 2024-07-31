@@ -6,10 +6,12 @@ import { NoteForm } from "../components/NoteForm";
 
 export const NotePage = () => {
     const { state } = useLocation();
-    const { createNoteQuery } = NotesRepository();
+    const { createNoteQuery, getNoteDetailsQuery } = NotesRepository();
 
     const folderId = state?.folderId;
     const note = state?.note;
+
+    const noteDetails = getNoteDetailsQuery(note?.noteId as string).data;
 
     const navigate = useNavigate();
     const toast = useToast();
@@ -26,10 +28,10 @@ export const NotePage = () => {
 
     return (
         <div className=" h-full w-full items-center place-content-center">
-            {note &&
+            {note && noteDetails &&
                 <NoteForm
                     folderId={folderId}
-                    note={note}
+                    note={noteDetails}
                     onClick={handleCreateNote}
                 />
             }

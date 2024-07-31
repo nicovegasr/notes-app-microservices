@@ -60,6 +60,7 @@ public class FoldersController {
 
         List<Note> notes = noteRepository.findByUsernameAndFolderId(usernameVo.getValue(), folderId);
         
+        
         return ResponseEntity.ok().body(notes);
     }
 }
