@@ -1,10 +1,11 @@
 import { Folder } from "@/src/models/Folder";
 import { Note } from "@/src/models/Note";
-import { Button } from "@nextui-org/react";
+import { Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
 import NotesRepository from "../../../repositories/NotesRepository";
 import { useToast } from "../../commons/hooks/useToasts";
 import { NoteCard } from "../components/NoteCard";
+import { useState } from "react";
 
 interface NotesLayoutProps {
     folder: Folder;
@@ -14,9 +15,10 @@ export const NotesLayout = ({ folder }: NotesLayoutProps) => {
     const { getNotesByFolder, deleteNoteQuery } = NotesRepository();
     const notesQuery = getNotesByFolder(folder.folderId);
     const notes: Note[] = notesQuery.data || [];
-
     const navigate = useNavigate();
     const toast = useToast();
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const [noteToDelete, setNoteToDelete] = useState<Note | null>(null);
 
     const folderWithNotes = (): boolean => {
         return (notes && Array.isArray(notes) && notes.length > 0);
@@ -27,15 +29,23 @@ export const NotesLayout = ({ folder }: NotesLayoutProps) => {
     }
 
     const handleDeleteNote = (note: Note) => {
-        note = { ...note, folderId: folder.folderId };
-        deleteNoteQuery(note).then(() => {
-            toast.add("Note deleted successfully", "success");
-        }).catch((error) => {
-            const message = error.response?.data || "An error occurred while deleting the note";
-            toast.add(message, "error");
-        }
-        );
+        setNoteToDelete(note);
+        onOpen();
     }
+
+    const confirmDelete = () => {
+        if (noteToDelete) {
+            const noteWithFolderId = { ...noteToDelete, folderId: folder.folderId };
+            deleteNoteQuery(noteWithFolderId).then(() => {
+                toast.add("Note deleted successfully", "success");
+                onClose();
+            }).catch((error) => {
+                const message = error.response?.data || "An error occurred while deleting the note";
+                toast.add(message, "error");
+            });
+        }
+    }
+
     return (
         <div className="notes-animation w-full bg-white mt-3 p-3 h-full">
             <div className="flex flex-row items-center justify-between ">
@@ -68,10 +78,8 @@ export const NotesLayout = ({ folder }: NotesLayoutProps) => {
                                         note: note
                                     }
                                 })}
-                                onDelete={handleDeleteNote}
+                                onDelete={() => handleDeleteNote(note)}
                             />
-
-
                         ))
                     }
                 </div>
@@ -83,7 +91,26 @@ export const NotesLayout = ({ folder }: NotesLayoutProps) => {
                     </div>
                 </div>
             }
-
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalContent>
+                    {(onClose) => (
+                        <>
+                            <ModalHeader className="flex flex-col gap-1">Confirm Deletion</ModalHeader>
+                            <ModalBody>
+                                <p>Are you sure you want to delete this note?</p>
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="danger" variant="light" onPress={onClose}>
+                                    Cancel
+                                </Button>
+                                <Button color="primary" onPress={confirmDelete}>
+                                    Confirm
+                                </Button>
+                            </ModalFooter>
+                        </>
+                    )}
+                </ModalContent>
+            </Modal>
         </div>
     );
 }
