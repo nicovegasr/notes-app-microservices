@@ -20,7 +20,9 @@ export const NotePage = () => {
         try {
             await createNoteQuery(note);
             toast.add("Note created successfully", "success");
-            navigate("/");
+            navigate("/", {
+                state: { selectedFolderId: note.folderId }
+            });
         } catch (error: any) {
             const message = error.response?.data || "An error occurred while creating the note";
             toast.add(message, "error");
@@ -30,7 +32,9 @@ export const NotePage = () => {
     const handleUpdatenote = (note: Note) => {
         updateNoteQuery(note).then(() => {
             toast.add("Note updated successfully", "success");
-            navigate("/");
+            navigate("/", {
+                state: { selectedFolderId: note.folderId }
+            });
         }).catch((error) => {
             const message = error.response?.data || "An error occurred while updating the note";
             toast.add(message, "error");

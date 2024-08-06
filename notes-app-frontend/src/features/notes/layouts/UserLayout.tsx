@@ -1,15 +1,25 @@
 import { Folder } from "@/src/models/Folder";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SelectedFolder } from "../usecases/SelectedFolder";
 import { FoldersLayout } from "./FoldersLayout";
 import { NotesLayout } from "./NotesLayout";
 
 interface UserLayoutProps {
     folders: Folder[];
+    initialSelectedFolderId?: string;
 }
 
-export const UserLayout = ({ folders }: UserLayoutProps) => {
+export const UserLayout = ({ folders, initialSelectedFolderId }: UserLayoutProps) => {
     const [selectedFolder, setSelectedFolder] = useState<Folder | null>(null);
+
+    useEffect(() => {
+        if (initialSelectedFolderId) {
+            const folder = folders.find(f => f.folderId === initialSelectedFolderId);
+            if (folder) {
+                setSelectedFolder(folder);
+            }
+        }
+    }, [initialSelectedFolderId, folders]);
 
     const handleFolderClick = (folder: Folder) => {
         setSelectedFolder((old) => old !== folder ? folder : null);
