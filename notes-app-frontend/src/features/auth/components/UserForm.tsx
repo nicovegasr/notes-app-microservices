@@ -1,6 +1,7 @@
 import { Button, Input } from "@nextui-org/react";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { User } from "../../../models/User";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 
 interface UserFormProps {
     mode: string;
@@ -9,6 +10,9 @@ interface UserFormProps {
 
 export const UserForm = ({ mode, onSend }: UserFormProps) => {
     const [user, setUser] = useState<User>({ username: '', email: '', password: '' } as User);
+    const [isVisible, setIsVisible] = useState(false);
+
+    const toggleVisibility = () => setIsVisible(!isVisible);
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
@@ -29,7 +33,7 @@ export const UserForm = ({ mode, onSend }: UserFormProps) => {
                     variant="underlined"
                     placeholder="Username"
                     fullWidth
-                    autoComplete={"username"}
+                    autoComplete="username"
                     onChange={handleInputChange}
                 />
             </div>
@@ -53,9 +57,18 @@ export const UserForm = ({ mode, onSend }: UserFormProps) => {
                     variant="underlined"
                     placeholder="Password"
                     fullWidth
-                    type="password"
+                    type={isVisible ? "text" : "password"}
                     autoComplete={mode === 'login' ? "current-password" : "new-password"}
                     onChange={handleInputChange}
+                    endContent={
+                        <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
+                            {isVisible ? (
+                                <EyeSlashIcon className="h-5 w-5 text-gray-400" />
+                            ) : (
+                                <EyeIcon className="h-5 w-5 text-gray-400" />
+                            )}
+                        </button>
+                    }
                 />
             </div>
             <Button
