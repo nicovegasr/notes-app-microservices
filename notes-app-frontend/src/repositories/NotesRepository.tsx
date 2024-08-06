@@ -7,46 +7,56 @@ import { envs } from "../environment/getEnvs";
 import { AuthContext } from "../features/auth/context/AuthContext";
 import { Note } from "../models/Note";
 
-const NotesRepository = () => {
+interface NotesRepositoryParams {
+    folderId?: string
+    noteId?: string
+}
+
+const NotesRepository = ({ folderId, noteId }: NotesRepositoryParams) => {
     const user = useContext(AuthContext)?.user;
 
     const baseUrl = envs.notes_url;
 
-    const getNoteDetailsQuery = (noteId: string) => {
-        return useData<Note>({
-            key: 'note-details',
-            fetcher: () => http.get<Note>(baseUrl + `/api/v1/notes/${noteId}`),
-            enabled: !!noteId && !!user
-        })
-    }
+    const getNoteDetailsQuery = useData<Note>({
+        key: 'note-details',
+        fetcher: () => http.get<Note>(baseUrl + `/api/v1/notes/${noteId}`),
+        enabled: !!noteId && !!user
+    })
 
-    const getNotesByFolder = (folderId: string) => {
-        return useData<Note[]>({
-            key: 'notes',
-            fetcher: () => http.get<Note[]>(baseUrl + `/api/v1/folders/${folderId}/notes?username=${user?.username}`),
-            enabled: !!folderId && !!user
-        })
-    }
 
-    const {
-        mutate: createNoteMutation,
-    } = useDataMutation<Note>({
+    const getNotesByFolder = useData<Note[]>({
+        key: 'notes',
+        fetcher: () => http.get<Note[]>(baseUrl + `/api/v1/folders/${folderId}/notes?username=${user?.username}`),
+        enabled: !!folderId && !!user
+    })
+
+    const { mutate: createNoteMutation } = useDataMutation<Note>({
         key: 'notes',
         mutation: (noteToCreate: Note) => http.post<Note, Note>(baseUrl + "/api/v1/notes", { ...noteToCreate, username: user?.username as string }),
+        onMutationSucess: () => getNotesByFolder.refetch()
     })
 
     const createNoteQuery = async (noteToCreate: Note) => {
         return await createNoteMutation(noteToCreate);
     }
 
-    const {
-        mutate: deleteNoteMutation,
-    } = useDataMutation<Note>({
+    const { mutate: updateNoteMutation } = useDataMutation<Note>({
+        key: 'note-details',
+        mutation: (noteToUpdate: Note) => http.put<Note, Note>(baseUrl + "/api/v1/notes/" + noteToUpdate.noteId, noteToUpdate),
+        onMutationSucess: () => getNoteDetailsQuery.refetch()
+    })
+
+    const updateNoteQuery = async (noteToUpdate: Note) => {
+        return await updateNoteMutation(noteToUpdate);
+    }
+
+    const { mutate: deleteNoteMutation } = useDataMutation<Note>({
         key: 'notes',
         mutation: (notetoDelete: Note) => http.delete<Note>(baseUrl + "/api/v1/notes/" +
             notetoDelete.noteId +
             "?username=" + user?.username +
             "&folderId=" + notetoDelete.folderId),
+        onMutationSucess: () => getNotesByFolder.refetch()
     })
 
     const deleteNoteQuery = async (notetoDelete: Note) => {
@@ -57,6 +67,7 @@ const NotesRepository = () => {
         getNoteDetailsQuery,
         getNotesByFolder,
         createNoteQuery,
+        updateNoteQuery,
         deleteNoteQuery
     }
 }

@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nicovegasr.notes_service.controllers.requests.CreateNote;
+import com.nicovegasr.notes_service.controllers.requests.UpdateNote;
 import com.nicovegasr.notes_service.models.dtos.DetailedNote;
 import com.nicovegasr.notes_service.models.entities.Note;
 import com.nicovegasr.notes_service.models.entities.Reminder;
@@ -82,6 +84,36 @@ public class NotesController {
         reminderRepository.saveAll(reminders);
 
         return ResponseEntity.ok().body("Note created");
+    }
+
+    @PutMapping("/{noteId}")
+    public ResponseEntity<String> updateNote(@PathVariable String noteId, @RequestBody UpdateNote updateNote) {
+        Note existingNote = noteRepository.findById(noteId).orElse(null);
+        if (existingNote == null) {
+            return ResponseEntity.notFound().build();
+        }
+        existingNote.setTitle(updateNote.title());
+        existingNote.setContent(updateNote.content());
+        existingNote.setFolderId(updateNote.folderId());
+        existingNote.setUpdatedAt(OffsetDateTime.now().toString());
+
+        noteRepository.save(existingNote);
+
+        if (updateNote.reminders() != null) {
+            reminderRepository.deleteByNoteId(noteId);
+            List<Reminder> newReminders = updateNote.reminders().stream()
+                    .map(reminder -> Reminder.builder()
+                            .reminderId(UUID.randomUUID().toString())
+                            .noteId(noteId)
+                            .date(reminder.date())
+                            .text(reminder.text())
+                            .build())
+                    .collect(Collectors.toList());
+
+            reminderRepository.saveAll(newReminders);
+        }
+
+        return ResponseEntity.ok().body("Note updated");
     }
 
     @DeleteMapping("/{noteId}")

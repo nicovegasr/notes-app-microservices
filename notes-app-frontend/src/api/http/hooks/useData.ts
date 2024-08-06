@@ -11,15 +11,17 @@ interface UseData<T> {
 interface Response<T> {
     data: T | undefined
     status: Status
+    refetch: () => void
 }
 
 export const useData = <T>({ key, fetcher, enabled }: UseData<T>): Response<T> => {
-    const { data, status } = useQuery<T, string>(
+    const { data, status, refetch } = useQuery<T, string>(
         {
             queryKey: [key],
             queryFn: fetcher,
             enabled: enabled ?? true,
             refetchOnWindowFocus: false,
+            // refetchOnMount: false,
         })
-    return { data, status }
+    return { data, status, refetch }
 }

@@ -6,33 +6,44 @@ import { NoteForm } from "../components/NoteForm";
 
 export const NotePage = () => {
     const { state } = useLocation();
-    const { createNoteQuery, getNoteDetailsQuery } = NotesRepository();
-
     const folderId = state?.folderId;
-    const note = state?.note;
+    const note: Note = state?.note;
 
-    const noteDetails = getNoteDetailsQuery(note?.noteId as string).data;
+    const { createNoteQuery, getNoteDetailsQuery, updateNoteQuery } = NotesRepository({ noteId: note?.noteId });
+
+    const noteToUpdate = getNoteDetailsQuery.data;
 
     const navigate = useNavigate();
     const toast = useToast();
 
-    const handleCreateNote = (note: Note) => {
-        createNoteQuery(note).then(() => {
+    const handleCreateNote = async (note: Note) => {
+        try {
+            await createNoteQuery(note);
             toast.add("Note created successfully", "success");
             navigate("/");
-        }).catch((error) => {
+        } catch (error: any) {
             const message = error.response?.data || "An error occurred while creating the note";
+            toast.add(message, "error");
+        }
+    }
+
+    const handleUpdatenote = (note: Note) => {
+        updateNoteQuery(note).then(() => {
+            toast.add("Note updated successfully", "success");
+            navigate("/");
+        }).catch((error) => {
+            const message = error.response?.data || "An error occurred while updating the note";
             toast.add(message, "error");
         });
     }
 
     return (
         <div className=" h-full w-full items-center place-content-center">
-            {note && noteDetails &&
+            {note && noteToUpdate &&
                 <NoteForm
-                    folderId={folderId}
-                    note={noteDetails}
-                    onClick={handleCreateNote}
+                    folderId={note.folderId}
+                    note={noteToUpdate}
+                    onClick={handleUpdatenote}
                 />
             }
             {!note &&

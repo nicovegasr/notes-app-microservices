@@ -8,4 +8,5 @@ import com.nicovegasr.notes_service.models.entities.Reminder;
 
 public interface ReminderRepository extends MongoRepository<Reminder, String> {
     List<Reminder> findByNoteId(String noteId);
+    void deleteByNoteId(String noteId);
 }

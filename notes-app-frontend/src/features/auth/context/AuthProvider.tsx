@@ -3,8 +3,13 @@ import React, { ReactNode, useEffect, useMemo, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
 
+const USER_STORAGE_KEY = 'user_session';
+
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [user, setUser] = useState<User>();
+    const [user, setUser] = useState<User | undefined>(() => {
+        const storedUser = localStorage.getItem(USER_STORAGE_KEY);
+        return storedUser ? JSON.parse(storedUser) : undefined;
+    });
 
     const navigate = useNavigate();
     
@@ -16,14 +21,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         if (!user && !routerWithoutAuth.includes(location.pathname)) {
             navigate("/login");
         }
-    }, [user, navigate]);
+    }, [user, navigate, location.pathname]);
     
     const login = (user: User) => {
         setUser(user);
+        localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
     }
 
     const logout = () => {
         setUser(undefined);
+        localStorage.removeItem(USER_STORAGE_KEY);
+        navigate("/login");
     }
 
     const contextValue = useMemo(() => ({

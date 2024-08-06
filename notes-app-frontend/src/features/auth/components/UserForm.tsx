@@ -29,6 +29,7 @@ export const UserForm = ({ mode, onSend }: UserFormProps) => {
                     variant="underlined"
                     placeholder="Username"
                     fullWidth
+                    autoComplete={"username"}
                     onChange={handleInputChange}
                 />
             </div>
@@ -40,6 +41,7 @@ export const UserForm = ({ mode, onSend }: UserFormProps) => {
                         variant="underlined"
                         placeholder="Email"
                         fullWidth
+                        autoComplete="email"
                         onChange={handleInputChange}
                     />
                 </div>
@@ -52,6 +54,7 @@ export const UserForm = ({ mode, onSend }: UserFormProps) => {
                     placeholder="Password"
                     fullWidth
                     type="password"
+                    autoComplete={mode === 'login' ? "current-password" : "new-password"}
                     onChange={handleInputChange}
                 />
             </div>

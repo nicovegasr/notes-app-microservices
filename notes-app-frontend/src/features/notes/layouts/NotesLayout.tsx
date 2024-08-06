@@ -12,9 +12,9 @@ interface NotesLayoutProps {
 }
 
 export const NotesLayout = ({ folder }: NotesLayoutProps) => {
-    const { getNotesByFolder, deleteNoteQuery } = NotesRepository();
-    const notesQuery = getNotesByFolder(folder.folderId);
-    const notes: Note[] = notesQuery.data || [];
+    const { getNotesByFolder, deleteNoteQuery } = NotesRepository({ folderId: folder.folderId });
+
+    const notes: Note[] = getNotesByFolder.data || [];
     const navigate = useNavigate();
     const toast = useToast();
     const { isOpen, onOpen, onClose } = useDisclosure();

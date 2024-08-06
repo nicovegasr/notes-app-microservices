@@ -22,22 +22,20 @@ export const UserLayout = ({ folders }: UserLayoutProps) => {
                     folders={folders}
                     onFolderClick={handleFolderClick}
                 />
-            }‡
-            {
-                selectedFolder && (
-                    <div className="flex flex-col h-full">
-                        <SelectedFolder
-                            selectedFolder={selectedFolder}
-                            handleFolderClick={handleFolderClick}
-                        />
-                        <div className="flex-1">
-                            <NotesLayout
-                                folder={selectedFolder}
-                            />
-                        </div>
-                    </div>
-                )
             }
+            {selectedFolder && (
+                <div className="flex flex-col h-full">
+                    <SelectedFolder
+                        selectedFolder={selectedFolder}
+                        handleFolderClick={handleFolderClick}
+                    />
+                    <div className="flex-1">
+                        <NotesLayout
+                            folder={selectedFolder}
+                        />
+                    </div>
+                </div>
+            )}
         </div >
     );
 };

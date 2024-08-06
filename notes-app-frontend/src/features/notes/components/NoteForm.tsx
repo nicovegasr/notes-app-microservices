@@ -1,7 +1,7 @@
 import { Note } from "@/src/models/Note";
 import { CalendarIcon } from '@heroicons/react/24/outline';
 import { Button, Card, CardBody, Chip, Input, Textarea } from "@nextui-org/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Reminder } from "../../../models/Reminder";
 
 interface NoteFormParams {
@@ -11,7 +11,6 @@ interface NoteFormParams {
 }
 
 export const NoteForm = ({ note, folderId, onClick }: NoteFormParams) => {
-    
     const [noteForm, setNoteForm] = useState<Note>(note || {
         noteId: "",
         folderId: folderId,
@@ -19,6 +18,12 @@ export const NoteForm = ({ note, folderId, onClick }: NoteFormParams) => {
         content: "",
         reminders: [],
     });
+
+    useEffect(() => {
+        if (note) {
+            setNoteForm(note);
+        }
+    }, [note]);
 
     const [reminderText, setReminderText] = useState("");
     const [reminderDate, setReminderDate] = useState("");
