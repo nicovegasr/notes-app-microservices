@@ -41,8 +41,8 @@ public class FoldersController {
     }
 
     @GetMapping("/{folderId}/notes")
-    public ResponseEntity<List<Note>> getFolderNotes(@PathVariable String folderId, @RequestParam String username) {
-        List<Note> notes = notesService.getNotesByUsernameAndFolderId(username, folderId);
+    public ResponseEntity<List<Note>> getFolderNotes(@PathVariable String folderId) {
+        List<Note> notes = notesService.getNotesByFolderId(folderId);
         return ResponseEntity.ok().body(notes);
     }
 }

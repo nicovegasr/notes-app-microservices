@@ -26,8 +26,8 @@ const NotesRepository = ({ folderId, noteId }: NotesRepositoryParams) => {
 
     const getNotesByFolder = useData<Note[]>({
         key: 'notes',
-        fetcher: () => http.get<Note[]>(baseUrl + `/api/v1/folders/${folderId}/notes?username=${user?.username}`),
-        enabled: !!folderId && !!user
+        fetcher: () => http.get<Note[]>(baseUrl + `/api/v1/folders/${folderId}/notes`),
+        enabled: !!folderId
     })
 
     const { mutate: createNoteMutation } = useDataMutation<Note>({

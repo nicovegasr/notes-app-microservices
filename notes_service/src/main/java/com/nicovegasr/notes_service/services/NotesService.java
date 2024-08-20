@@ -23,10 +23,8 @@ public class NotesService {
     private final NoteRepository noteRepository;
     private final ReminderRepository reminderRepository;
 
-    public List<Note> getNotesByUsernameAndFolderId(String username, String folderId) {
-        Username usernameVo = Username.create(username);
-
-        return noteRepository.findByUsernameAndFolderId(usernameVo.getValue(), folderId);
+    public List<Note> getNotesByFolderId(String folderId) {
+        return noteRepository.findByFolderId(folderId);
     }
 
     public DetailedNote getNoteDetails(String noteId) {
