@@ -1,9 +1,11 @@
 import { http } from "../api/http/axios"
 import { useDataMutation } from "../api/http/hooks/useMutation"
+import { envs } from "../environment/getEnvs"
 import { User } from "../models/User"
 
 const AuthRepository = () => {
-    const baseUrl = "http://localhost:8082"
+
+    const baseUrl = envs.auth_url;
 
     const {
         mutate: loginMutate,

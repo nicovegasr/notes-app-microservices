@@ -1,14 +1,14 @@
 package com.nicovegasr.auth_service.auth.application.usecases;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
+
+import javax.crypto.SecretKey;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-
-import javax.crypto.SecretKey;
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
-import java.util.Date;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class JwtToken {

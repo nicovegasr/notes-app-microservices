@@ -3,19 +3,30 @@ import {User} from "../../../models/User";
 import AuthRepository from "../../../repositories/AuthRepository";
 import {UserForm} from "../components/UserForm";
 import {useToast} from "../../commons/hooks/useToasts";
+import { useNavigate } from "react-router-dom";
 
 export const Register = () => {
 
     const {register } = AuthRepository();
+
+    const navigate = useNavigate();
 
     const toast = useToast();
 
     const registerUser = (user: User) => {
         register(user).then(() => {
             toast.add("User registered successfully", "success");
+            navigate("/login");
         }).catch((error) => {
-            const message = error.response?.data as string || "Network error";
-            toast.add(message, "error");
+            const message = error.response?.data
+            switch (typeof message) {
+                case "string":
+                    toast.add(message, "error");
+                    break;
+                default:
+                    toast.add("An error occurred while registering the user", "error");
+                    break;
+            }
         })
     }
 

@@ -24,7 +24,6 @@
 
     <modules>
         <module>auth_service</module>
-        <module>folders_service</module>
         <module>notes_service</module>
         <module>users_service</module>
     </modules>

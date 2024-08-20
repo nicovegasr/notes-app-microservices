@@ -22,13 +22,14 @@ public class HttpExceptionHandler {
         log.error("Auth exception:{}", authError.getMessage());
         return ResponseEntity.status(401).body("Unauthorized");
     }
+
     private Integer getUserExceptionStatus(UserException userException) {
         return switch (userException.getClass().getSimpleName()) {
-            case "UsernameEmpty", "PasswordEmpty", "UsernameLengthIncorrect", "PasswordIncorrectFormat" -> 400;
+            case "UsernameEmpty", "PasswordEmpty", "UsernameLengthIncorrect", "PasswordIncorrectFormat", "EmailEmpty",
+                 "EmailIncorrectFormat" -> 400;
             case "AlgorithmError", "SecretKeyNotProvided" -> 503;
             case "UsernameAlreadyExist" -> 409;
             default -> 500;
         };
     }
-
 }

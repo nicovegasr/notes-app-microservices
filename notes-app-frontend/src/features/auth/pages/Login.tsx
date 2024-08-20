@@ -1,14 +1,34 @@
 import { Image, Link } from "@nextui-org/react";
+import { useNavigate } from "react-router-dom";
 import { User } from "../../../models/User";
-import { UserForm } from "../components/UserForm";
 import AuthRepository from "../../../repositories/AuthRepository";
+import { useToast } from "../../commons/hooks/useToasts";
+import { UserForm } from "../components/UserForm";
+import { useEffect } from "react";
+import { useAuth } from "../hooks/useAuth";
 
 const Login = () => {
 
     const { login, loginResponse } = AuthRepository();
 
+    const toast = useToast();
+    const auth = useAuth();
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (loginResponse.status === "success") {
+            auth.login(loginResponse.data as User);
+            navigate("/");
+        }
+    }, [loginResponse.status]);
+
     const loginUser = (user: User) => {
-        login(user)
+        login(user).then(() => {
+            toast.add("User logged in successfully", "success");
+        }).catch(() => {
+            toast.add("Unauthorized", "error");
+        })
     };
 
     return (
@@ -24,7 +44,7 @@ const Login = () => {
                 />
                 <Link href="/register" > Don't have an account? Sign in </Link>
             </div>
-        
+
         </div>
     );
 };

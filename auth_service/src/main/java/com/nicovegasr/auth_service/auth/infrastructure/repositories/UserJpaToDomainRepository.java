@@ -21,12 +21,14 @@ public class UserJpaToDomainRepository implements UserRepository {
     }
 
     public User save(User user) {
-        return userMapper.toDomainModel(
-                userJpaRepository.save(
-                        userMapper.toEntity(user)));
+        return userMapper.toDomainModel(userJpaRepository.save(userMapper.toEntity(user)));
     }
 
     public boolean existsByUsername(String username) {
         return userJpaRepository.existsByUsername(username);
+    }
+
+    public boolean existsByEmail(String email) {
+        return userJpaRepository.existsByEmail(email);
     }
 }

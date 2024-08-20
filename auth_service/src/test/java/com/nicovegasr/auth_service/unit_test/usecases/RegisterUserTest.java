@@ -19,6 +19,7 @@ public class RegisterUserTest {
      */
     UserRepository userRepository;
     String username = "TestUsername";
+    String email = "test@email.com";
     String password = "ThisIsMyPassword123+";
 
     @BeforeEach
@@ -30,13 +31,13 @@ public class RegisterUserTest {
     void registerUserThatAlreadyExistShouldThrowAnError() {
         when(userRepository.existsByUsername(username)).thenReturn(true);
         assertThrows(UsernameAlreadyExist.class, () ->
-                RegisterUser.register(userRepository, username, password)
+                RegisterUser.register(userRepository, username, email, password)
         );
     }
 
     @Test
     void registerNewUserShouldRegisterUser() {
         when(userRepository.existsByUsername(username)).thenReturn(false);
-        assertDoesNotThrow(() -> RegisterUser.register(userRepository, username, password));
+        assertDoesNotThrow(() -> RegisterUser.register(userRepository, username, email, password));
     }
 }

@@ -28,6 +28,7 @@ public class UserMapper {
         return User.create(
                 userEntity.getUsername(),
                 decryptedPassword,
+                userEntity.getEmail(),
                 userEntity.getCreatedAt(),
                 userEntity.getLastLoginDate());
     }
@@ -39,6 +40,7 @@ public class UserMapper {
         return UserEntity.builder()
                 .username(user.getUsername().getName())
                 .password(encryptedPassword)
+                .email(user.getEmail().getValue())
                 .createdAt(user.getCreatedAt())
                 .lastLoginDate(user.getLastLoginDate())
                 .build();

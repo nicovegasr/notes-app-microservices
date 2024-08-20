@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: notes
       POSTGRES_DB: auth
     volumes:
-      - ./initdb:/docker-entrypoint-initdb.d
+      - ./initdb/auth:/docker-entrypoint-initdb.d
     ports:
       - 5432:5432
     expose:
@@ -21,7 +21,20 @@ services:
       MONGO_INITDB_ROOT_USERNAME: notes
       MONGO_INITDB_ROOT_PASSWORD: notes
       MONGO_INITDB_DATABASE: notes
+    volumes:
+        - ./initdb/notes:/docker-entrypoint-initdb.d
     ports:
       - 27017:27017
     expose:
       - 27017
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: notes
+      ME_CONFIG_MONGODB_ADMINPASSWORD: notes
+      ME_CONFIG_MONGODB_URL: mongodb://notes:notes@db-mongo:27017/
+      ME_CONFIG_BASICAUTH: false

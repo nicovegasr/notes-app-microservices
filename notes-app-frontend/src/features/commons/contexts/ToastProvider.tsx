@@ -1,7 +1,7 @@
 import React, { ReactNode, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { Toast, ToastTypes } from "../components/Toast";
 import { ToastContext } from "./ToastContext";
-import { createPortal } from "react-dom";
 
 interface ToastProps {
     message: string;
@@ -12,7 +12,9 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     const [toasts, setToasts] = useState<ToastProps[]>([]);
 
     const add = (message: string, type: ToastTypes) => {
-        setToasts((old) => [...old, { message, type }]);
+        setToasts((old) => {
+            return [...old, { message, type }];
+        });
     };
 
     const remove = (index: number) => {
@@ -25,14 +27,17 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         <ToastContext.Provider value={contextValue}>
             {children}
             {createPortal(
-                toasts.map((toast, index) => (
-                    <div className="flex justify-end mr-4">
+                <div className="toast fixed bottom-0 right-0 m-4 flex flex-col-reverse space-y-1 space-y-reverse">
+                    {toasts.map((toast, index) => (
                         <Toast
+                            key={index}
+                            index={index}
                             message={toast.message}
                             type={toast.type}
-                            onClose={() => remove(index)} />
-                    </div>
-                )),
+                            onClose={remove}
+                        />
+                    ))}
+                </div>,
                 document.body
             )}
         </ToastContext.Provider>

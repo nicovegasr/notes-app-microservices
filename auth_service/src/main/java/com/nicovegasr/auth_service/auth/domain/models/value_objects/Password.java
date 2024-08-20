@@ -27,7 +27,7 @@ public class Password {
                 "^(?=.*[\\d])" +
                         "(?=.*[a-z])" +
                         "(?=.*[A-Z])" +
-                        "(?=.*[@#$%^&+=])" +
+                        "(?=.*[@#$%^&+=*_-])" +
                         "(?=\\S+$).{8,}$")) {
             throw new PasswordIncorrectFormat(); 
         }
